@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { publish } from "./pubsub";
+import { Test1 } from "./components/TestComponent";
+import { useStore } from "./custom";
 
 function App() {
+  let state = useStore(["Increment", "Decrement"]);
+
+  const handleIncrease = () => {
+    publish("Increment", state);
+  };
+
+  const handleDecrease = () => {
+    publish("Decrement", state);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={() => handleDecrease()}>-</button>
+      <p>{state}</p>
+      <button onClick={() => handleIncrease()}>+</button>
+      <Test1 />
     </div>
   );
 }
